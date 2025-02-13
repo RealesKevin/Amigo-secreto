@@ -1,19 +1,20 @@
 // El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
 
 let amigos=[];
+const emojis = ["😄", "😂",  "🤪",  "😜", "🤗",  "💥", "🌟", "🎉", "🍕", "🎈", "🐱", "🌵", "🍀", "🚀"];
 
 function agregarAmigo() {
     //captura el valor del campo de entrada
     let nombre= document.getElementById("amigo").value.toLowerCase();
-
+    let nombreCitalizado = capatilizarNombre(nombre);
     //verifica la entrada
     if( nombre.length > 0) {
         if (amigos.includes(nombre)) {
             alert("Por favor, ingrese otro nombre; el nombre ya existe.")
         } else {
+            let emojiAleatorio= emojis[Math.floor(Math.random() * emojis.length)];
+            amigos.push(nombreCitalizado + " " + emojiAleatorio);
             //actualiza el array de amigos
-            amigos.push(nombre);
-
             actualizaLista();
         }
     } else {
@@ -42,7 +43,7 @@ function actualizaLista() {
 }
 
 function sortearAmigo() {
-    if (amigos.length === 0) {
+    if (amigos.length < 2) {
         alert("¡Vamos! Agrega algunos amigos primero y luego podremos hacer el sorteo.");
     } else {
         let indiceAleatorio= Math.floor(Math.random() * amigos.length);
@@ -51,4 +52,18 @@ function sortearAmigo() {
         let resultado= document.getElementById("resultado");
         resultado.innerHTML = `El amigo secreto sorteado es: ${amigoSecreto}`;
     }
+}
+
+function borrarLista() {
+    amigos=[];
+    actualizaLista();
+    let resultado= document.getElementById("resultado");
+    resultado.innerHTML="";
+}
+
+function capatilizarNombre(nombre) {
+    return nombre.split(" ").map( palabra => {
+        return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
+    }).join(" ");
+
 }
