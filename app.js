@@ -5,15 +5,21 @@ const emojis = ["😄", "😂",  "🤪",  "😜", "🤗",  "💥", "🌟", "🎉
 
 function agregarAmigo() {
     //captura el valor del campo de entrada
-    let nombre= document.getElementById("amigo").value.toLowerCase();
-    let nombreCitalizado = capatilizarNombre(nombre);
+    let nombre= document.getElementById("amigo").value.toLowerCase().trim().replace(/\s+/g, ' ');
+    
+    let nombreCapitalizado = capitalizarNombre(nombre);
+
     //verifica la entrada
     if( nombre.length > 0) {
-        if (amigos.includes(nombre)) {
-            alert("Por favor, ingrese otro nombre; el nombre ya existe.")
+
+        let existe= amigos.some(amigo=> amigo.split(" ").slice(0,-1).join(" ").toLowerCase() === nombre.toLowerCase());
+
+        if (existe) {
+            alert("Por favor, ingrese otro nombre; el nombre ya existe.");
         } else {
             let emojiAleatorio= emojis[Math.floor(Math.random() * emojis.length)];
-            amigos.push(nombreCitalizado + " " + emojiAleatorio);
+            amigos.push(nombreCapitalizado + " " + emojiAleatorio);
+
             //actualiza el array de amigos
             actualizaLista();
         }
@@ -35,8 +41,8 @@ function actualizaLista() {
     for(let amigo of amigos) {
         let li= document.createElement("li");
         
-        // Convierte el primer carácter del nombre a mayúscula y el resto permanece igual.
-        li.textContent = amigo.charAt(0).toUpperCase() + amigo.slice(1);
+        // Establece el texto del <li> como el nombre del amigo (ya capitalizado y con emoji)
+        li.textContent = amigo
 
         lista.appendChild(li);
     }
@@ -61,7 +67,8 @@ function borrarLista() {
     resultado.innerHTML="";
 }
 
-function capatilizarNombre(nombre) {
+function capitalizarNombre(nombre) {
+    // Divide el nombre en palabras, capitaliza cada una y luego las une de nuevo
     return nombre.split(" ").map( palabra => {
         return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
     }).join(" ");
