@@ -11,21 +11,39 @@ function agregarAmigo() {
 
     //verifica la entrada
     if( nombre.length > 0) {
+        let nombreConCaracter=false;
 
-        let existe= amigos.some(amigo=> amigo.split(" ").slice(0,-1).join(" ").toLowerCase() === nombre.toLowerCase());
+        //verificamos que solo contenga letras
+        for(let letra of nombre) {
+            // Si la letra no es una letra (es un número o símbolo)
+            if((letra.toLowerCase() === letra.toUpperCase() && letra !== ' ')) {
+                nombreConCaracter=true;
+                break;
+            }
+        }
 
-        if (existe) {
-            alert("Por favor, ingrese otro nombre; el nombre ya existe.");
+        //Si el nombre contiene un cáracter no permitido
+        if( nombreConCaracter){
+            alert("No se permiten caracteres especiales o números en el nombre.");
         } else {
-            let emojiAleatorio= emojis[Math.floor(Math.random() * emojis.length)];
-            amigos.push(nombreCapitalizado + " " + emojiAleatorio);
+            let existe= amigos.some(amigo=> amigo.split(" ").slice(0,-1).join(" ").toLowerCase() === nombre.toLowerCase());
 
-            //actualiza el array de amigos
-            actualizaLista();
+            if (existe) {
+                alert("Este nombre ya está en la lista. Por favor, ingresa uno diferente.")
+            } else {
+                //asigna un emoji aleatorio
+                let emojiAleatorio= emojis[Math.floor(Math.random() * emojis.length)];
+
+                amigos.push(nombreCapitalizado + " " + emojiAleatorio);
+
+                //actualizar el array de amigos
+                actualizaLista()
+            }
         }
     } else {
-        alert("Por favor, inserte un nombre.");
+        alert("Por favor, ingresa un nombre antes de continuar.");
     }
+
     //limpiar el campo de entrada
     limpiarEntrada();
 }
@@ -50,7 +68,7 @@ function actualizaLista() {
 
 function sortearAmigo() {
     if (amigos.length < 2) {
-        alert("¡Vamos! Agrega algunos amigos primero y luego podremos hacer el sorteo.");
+        alert("¡Vamos! Agrega al menos dos nombres para poder realizar el sorteo.");
     } else {
         let indiceAleatorio= Math.floor(Math.random() * amigos.length);
         let amigoSecreto= amigos[indiceAleatorio];
@@ -74,3 +92,4 @@ function capitalizarNombre(nombre) {
     }).join(" ");
 
 }
+
