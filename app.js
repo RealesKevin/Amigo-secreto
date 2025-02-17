@@ -74,14 +74,22 @@ function sortearAmigo() {
 
         let resultado= document.getElementById("resultado");
         resultado.innerHTML = `El amigo secreto sorteado es: ${amigoSecreto}`;
+
+        document.getElementById("sortear").setAttribute("disabled","");
+        document.getElementById("sortear").style.backgroundColor= "#ccc";
     }
 }
 
 function borrarLista() {
+
     amigos=[];
     actualizaLista();
+
     let resultado= document.getElementById("resultado");
     resultado.innerHTML="";
+
+    document.getElementById("sortear").removeAttribute("disabled");
+    document.getElementById("sortear").style.backgroundColor ="#fe652b";
 }
 
 function capitalizarNombre(nombre) {
