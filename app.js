@@ -59,7 +59,6 @@ function actualizaLista() {
     for(let amigo of amigos) {
         let li= document.createElement("li");
         
-        // Establece el texto del <li> como el nombre del amigo (ya capitalizado y con emoji)
         li.textContent = amigo
 
         lista.appendChild(li);
@@ -92,4 +91,10 @@ function capitalizarNombre(nombre) {
     }).join(" ");
 
 }
+
+document.getElementById("amigo").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        agregarAmigo();
+    }
+});
 
